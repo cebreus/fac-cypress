@@ -1,13 +1,15 @@
 describe('Test FAC API', () => {
 
+  let root = 'https://api-dev.fastandcomfy.io';
+  let rootSwagger = 'https://developersdev.fastandcomfy.io/swagger';
   let email = 'me@cebre.us';
 
   it('Visits API home', () => {
-    cy.visit('https://apidev.fastandcomfy.io')
+    cy.visit(root)
   })
 
   it('Check all links on API home', () => {
-    cy.visit('https://apidev.fastandcomfy.io')
+    cy.visit(root)
     cy.get('a:not([href^="mailto:"]):not([href*="www.linkedin.com"])').each(page => {
       cy.request(page.prop('href'))
     })
@@ -19,7 +21,7 @@ describe('Test FAC API', () => {
       .contains('Read our docs')
       .should('be.visible')
       .should('have.class', 'btn-secondary')
-      .should('have.attr', 'href', 'https://developersdev.fastandcomfy.io/swagger')
+      .should('have.attr', 'href', rootSwagger)
   })
 
   it('Link: Get your API key', () => {
@@ -32,7 +34,7 @@ describe('Test FAC API', () => {
   })
 
   it('Visits Get your API key', () => {
-    cy.visit('https://apidev.fastandcomfy.io/apikey')
+    cy.visit(root + '/apikey')
   })
 
   it('Send form', () => {
