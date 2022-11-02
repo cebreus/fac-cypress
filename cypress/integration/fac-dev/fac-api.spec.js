@@ -1,6 +1,6 @@
 describe('Test FAC API', () => {
 
-  let root = 'https://api-dev.fastandcomfy.io';
+  let root = 'https://apidev.fastandcomfy.io';
   let rootSwagger = 'https://developersdev.fastandcomfy.io/swagger';
   let email = 'me@cebre.us';
 
