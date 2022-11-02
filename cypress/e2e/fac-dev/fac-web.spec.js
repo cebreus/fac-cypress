@@ -63,32 +63,32 @@ describe('Test FAC web', () => {
       .should('contain', 'Run')
   })
 
-  it('Run PostgreSQL', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/postgresql/"] .btn')
-      .click()
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('contain', 'Run')
-        cy.wrap($btn).click()
-      })
-      .wait(5000)
-      .get('.c-app-starter--done')
-      .should('be.visible')
-      .should('contain', 'App ID')
-  })
+  // it('Run PostgreSQL', () => {
+  //   cy
+  //     .get('[data-cy="AppTile"][href="/postgresql/"] .btn')
+  //     .click()
+  //     .get('.btn-success').then(($btn) => {
+  //       cy.wrap($btn).should('contain', 'Run')
+  //       cy.wrap($btn).click()
+  //     })
+  //     .wait(5000)
+  //     .get('.c-app-starter--done')
+  //     .should('be.visible')
+  //     .should('contain', 'App ID')
+  // })
 
-  it('Go to Contact from top menu', () => {
-    cy
-      .get('.c-menu__label')
-      .click()
-      .get('.u-link[href="/contact"]').then(($btn) => {
-        cy.wrap($btn).should('contain', 'Contact')
-        cy.wrap($btn).click()
-      })
-      .wait(1000)
-      .get('h1.c-header__title')
-      .should('have.text', 'Contact')
-  })
+  // it('Go to Contact from top menu', () => {
+  //   cy
+  //     .get('.c-menu__label')
+  //     .click()
+  //     .get('.u-link[href="/contact"]').then(($btn) => {
+  //       cy.wrap($btn).should('contain', 'Contact')
+  //       cy.wrap($btn).click()
+  //     })
+  //     .wait(1000)
+  //     .get('h1.c-header__title')
+  //     .should('have.text', 'Contact')
+  // })
 
   // it('Visits FAC Contact', () => {
   //   cy.visit(rootWeb + "/contact")
@@ -130,7 +130,7 @@ describe('Test FAC web', () => {
   // })
 
   it('Visits FAC Strapi', () => {
-    cy.visit(rootWeb + "/strapi")
+    cy.visit(rootWeb + "/strapi/")
   })
 
   it('Send Strapi interest', () => {
