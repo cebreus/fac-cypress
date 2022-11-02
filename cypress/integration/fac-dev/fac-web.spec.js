@@ -2,7 +2,7 @@ describe('Test FAC web', () => {
 
   let rootDev = 'https://developersdev.fastandcomfy.io';
   let rootApi = 'https://api-dev.fastandcomfy.io';
-  let rootWeb = 'https://dev.fastandcomfy.io';
+  let rootWeb = 'https://fastandcomfy.io';
   let rootWizard = 'https://wizarddev.fastandcomfy.io';
 
   // it('Check redirects', () => {
@@ -41,31 +41,31 @@ describe('Test FAC web', () => {
 
   it('AppTile PostgreSQL', () => {
     cy
-      .get('[data-cy="AppTile"][href="/postgresql"] .btn')
+      .get('[data-cy="AppTile"][href="/postgresql/"] .btn')
       .should('contain', 'Run')
   })
 
   it('AppTile MySQL', () => {
     cy
-      .get('[data-cy="AppTile"][href="/mysql"] .btn')
+      .get('[data-cy="AppTile"][href="/mysql/"] .btn')
       .should('contain', 'Run')
   })
 
   it('AppTile Redis', () => {
     cy
-      .get('[data-cy="AppTile"][href="/redis"] .btn')
+      .get('[data-cy="AppTile"][href="/redis/"] .btn')
       .should('contain', 'Run')
   })
 
   it('AppTile MongoDB', () => {
     cy
-      .get('[data-cy="AppTile"][href="/mongodb"] .btn')
+      .get('[data-cy="AppTile"][href="/mongodb/"] .btn')
       .should('contain', 'Run')
   })
 
   it('Run PostgreSQL', () => {
     cy
-      .get('[data-cy="AppTile"][href="/postgresql"] .btn')
+      .get('[data-cy="AppTile"][href="/postgresql/"] .btn')
       .click()
       .get('.btn-success').then(($btn) => {
         cy.wrap($btn).should('contain', 'Run')
@@ -90,44 +90,44 @@ describe('Test FAC web', () => {
       .should('have.text', 'Contact')
   })
 
-  it('Visits FAC Contact', () => {
-    cy.visit(rootWeb + "/contact")
-  })
+  // it('Visits FAC Contact', () => {
+  //   cy.visit(rootWeb + "/contact")
+  // })
 
-  it('Send contact form', () => {
-    cy
-      .get('[data-cy="FormContact"]')
-      .should('be.visible')
-      .get('#email').then(($input) => {
-        cy.wrap($input).should('have.attr', 'required')
-      })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('be.visible').should('contain', 'Submit').should('have.attr', 'disabled')
-      })
-      .wait(3000)
-      .get('#email').then(($input) => {
-        cy.wrap($input).focus().type('me@cebre.us')
-      })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).not('disabled')
-        cy.wrap($btn).click()
-      })
-      .wait(3000)
-      .get('[data-cy="Alert"].alert-success').should('be.visible').should('contain', 'Thank you for your message!')
-  })
+  // it('Send contact form', () => {
+  //   cy
+  //     .get('[data-cy="FormContact"]')
+  //     .should('be.visible')
+  //     .get('#email').then(($input) => {
+  //       cy.wrap($input).should('have.attr', 'required')
+  //     })
+  //     .get('.btn-success').then(($btn) => {
+  //       cy.wrap($btn).should('be.visible').should('contain', 'Submit').should('have.attr', 'disabled')
+  //     })
+  //     .wait(3000)
+  //     .get('#email').then(($input) => {
+  //       cy.wrap($input).focus().type('me@cebre.us')
+  //     })
+  //     .get('.btn-success').then(($btn) => {
+  //       cy.wrap($btn).not('disabled')
+  //       cy.wrap($btn).click()
+  //     })
+  //     .wait(3000)
+  //     .get('[data-cy="Alert"].alert-success').should('be.visible').should('contain', 'Thank you for your message!')
+  // })
 
-  it('Visits FAC Submit idea', () => {
-    cy.visit(rootWeb + "/submit-your-idea")
-  })
+  // it('Visits FAC Submit idea', () => {
+  //   cy.visit(rootWeb + "/submit-your-idea")
+  // })
 
-  it('Button Submit your idea', () => {
-    cy
-      .get('[data-cy="submit-your-idea"]')
-      .should('be.visible')
-      .should('have.class', 'btn-secondary')
-      .should('have.text', 'Submit your idea')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/submit-your-idea")
-  })
+  // it('Button Submit your idea', () => {
+  //   cy
+  //     .get('[data-cy="submit-your-idea"]')
+  //     .should('be.visible')
+  //     .should('have.class', 'btn-secondary')
+  //     .should('have.text', 'Submit your idea')
+  //     .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/submit-your-idea")
+  // })
 
   it('Visits FAC Strapi', () => {
     cy.visit(rootWeb + "/strapi")
@@ -160,67 +160,67 @@ describe('Test FAC web', () => {
       .get('[data-cy="Alert"].alert-success').should('be.visible').should('contain', 'Thank you for your interest!')
   })
 
-  it('Button Eager Write tu us', () => {
-    cy
-      .get('[data-cy="eager-app"]')
-      .should('be.visible')
-      .should('have.text', 'Write to us.')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=strapi%20—%20fastandcomfy.io&amp;body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/strapi")
-  })
+  // it('Button Eager Write tu us', () => {
+  //   cy
+  //     .get('[data-cy="eager-app"]')
+  //     .should('be.visible')
+  //     .should('have.text', 'Write to us.')
+  //     .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=strapi%20—%20fastandcomfy.io&amp;body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/strapi")
+  // })
 
 
-  it('Visits FAC FAQ', () => {
-    cy.visit(rootWeb + "/help")
-  })
+  // it('Visits FAC FAQ', () => {
+  //   cy.visit(rootWeb + "/help")
+  // })
 
-  it('Button Resources', () => {
-    cy
-      .get('[data-cy="HeaderPerex"] [href*="developers"]')
-      .should('be.visible')
-      .should('have.text', 'Resources for developers')
-      .should('have.attr', 'href', rootDev)
-      .should('have.class', 'btn-secondary')
-  })
+  // it('Button Resources', () => {
+  //   cy
+  //     .get('[data-cy="HeaderPerex"] [href*="developers"]')
+  //     .should('be.visible')
+  //     .should('have.text', 'Resources for developers')
+  //     .should('have.attr', 'href', rootDev)
+  //     .should('have.class', 'btn-secondary')
+  // })
 
-  it('Button Pricing', () => {
-    cy
-      .get('[data-cy="HeaderPerex"] [href*="pricing"]')
-      .should('be.visible')
-      .should('have.text', 'Pricing')
-      .should('have.class', 'btn-link')
-      .should('have.class', 'btn-white')
-      .should('have.attr', 'href', '/pricing')
-  })
+  // it('Button Pricing', () => {
+  //   cy
+  //     .get('[data-cy="HeaderPerex"] [href*="pricing"]')
+  //     .should('be.visible')
+  //     .should('have.text', 'Pricing')
+  //     .should('have.class', 'btn-link')
+  //     .should('have.class', 'btn-white')
+  //     .should('have.attr', 'href', '/pricing')
+  // })
 
-  it('Visits FAC Procong', () => {
-    cy.visit(rootWeb + "/pricing")
-  })
+  // it('Visits FAC Procong', () => {
+  //   cy.visit(rootWeb + "/pricing")
+  // })
 
-  it('Link: suggestions and comments', () => {
-    cy
-      .get('a')
-      .contains('suggestions and comments')
-      .should('be.visible')
-      .should('have.class', 'link-white')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A%E2%80%94%0D%0AFrom%20" + rootWeb + "/pricing")
-  })
+  // it('Link: suggestions and comments', () => {
+  //   cy
+  //     .get('a')
+  //     .contains('suggestions and comments')
+  //     .should('be.visible')
+  //     .should('have.class', 'link-white')
+  //     .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A%E2%80%94%0D%0AFrom%20" + rootWeb + "/pricing")
+  // })
 
-  it('Link: Contact us', () => {
-    cy
-      .get('a')
-      .contains('Contact us')
-      .should('be.visible')
-      .should('have.class', 'link-white')
-      .should('have.attr', 'href', '/contact')
-  })
+  // it('Link: Contact us', () => {
+  //   cy
+  //     .get('a')
+  //     .contains('Contact us')
+  //     .should('be.visible')
+  //     .should('have.class', 'link-white')
+  //     .should('have.attr', 'href', '/contact')
+  // })
 
-  it('Link: public API', () => {
-    cy
-      .get('a')
-      .contains('public API')
-      .should('be.visible')
-      .should('have.class', 'link-white')
-      .should('have.attr', 'href', rootApi)
-  })
+  // it('Link: public API', () => {
+  //   cy
+  //     .get('a')
+  //     .contains('public API')
+  //     .should('be.visible')
+  //     .should('have.class', 'link-white')
+  //     .should('have.attr', 'href', rootApi)
+  // })
 
 })
