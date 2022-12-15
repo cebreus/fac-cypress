@@ -125,8 +125,7 @@ describe('Test FAC web', () => {
     'url': 'https://fastandcomfy.io/blog/',
     'expectUrl': 'https://fastandcomfy.io/',
     'expectStatus': 404
-  }
-  ]
+  }]
 
   // it('Visits page', () => {
   //   cy.intercept(rootWeb).as('home')
@@ -249,11 +248,31 @@ describe('Test FAC web', () => {
         cy.url()
           .should("be.equals", pageObj.expectUrl)
 
-        // Metadata
+        // Metadata existence
+
+
+        cy.get('head')
+          .find('title')
+          .should('have.length', 1)
+        cy.get('head')
+          .find('meta[name=description]')
+          .should('have.length', 1)
+        cy.get('head')
+          .find('meta[name=robots]')
+          .should('have.length', 1)
+        cy.get('head')
+          .find('link[rel=canonical]')
+          .should('have.length', 1)
+
+        cy.get('body')
+          .find('h1')
+          .should('have.length', 1)
+
+        // Metadata content
 
         if (pageObj.title) {
           cy.title()
-            .should("include", pageObj.title);
+            .should("include", pageObj.title)
         }
         if (pageObj.description) {
           cy.get('head meta[name=description]')
@@ -272,6 +291,7 @@ describe('Test FAC web', () => {
         }
 
         // Open Graph
+
         if (pageObj.og) {
           cy.get('head meta[property="og:url"]')
             .should('have.attr', 'content')
@@ -310,6 +330,7 @@ describe('Test FAC web', () => {
         }
 
         // Content
+
         if (pageObj.h1) {
           cy.get('h1')
             .should('have.attr', 'href')
