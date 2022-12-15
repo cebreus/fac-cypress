@@ -1,131 +1,160 @@
 describe('Test FAC web', () => {
-
   const fbAppId = '677275829755694';
   const ogSiteName = 'Fast and Comfy Technologies';
-  let rootDev = 'https://developersdev.fastandcomfy.io';
-  let rootApi = 'https://api-dev.fastandcomfy.io';
-  let rootWeb = 'https://fastandcomfy.io';
-  let rootWizard = 'https://wizarddev.fastandcomfy.io';
+  const rootDev = 'https://developersdev.fastandcomfy.io';
+  const rootApi = 'https://api-dev.fastandcomfy.io';
+  const rootWeb = 'https://fastandcomfy.io';
+  const rootWizard = 'https://wizarddev.fastandcomfy.io';
 
-  let appTileUrls = []
-  let internalUrls = []
-  let externalUrls = []
-  let responseCheck = [{
-    'url': 'https://fastandcomfy.io/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 200,
-    'title': 'Revolution of Hosting',
-    'description': 'We’re hosting apps and services that are ready for you to use in an instant. No need for installation, configuration or worrying. Just what you need in a matter of seconds. It’s fast and comfy.',
-    'h1': 'Revolution of Hosting',
-    'robots': 'index,follow',
-    'canonical': 'https://fastandcomfy.io/',
-    "og": true,
-    'ogType': 'website',
-    'ogTitle': 'Fast and Comfy Technologies',
-    'ogDescription': 'Any server uptime in 3 seconds. No installation, configuration, or maintenance.',
-    'ogImage': 'https://res.cloudinary.com/fastandcomfy/image/upload/v1606512896/open-graph/fac-og.png',
-    'ogImageAlt': 'Revolution of Hosting'
-  }, {
-    'url': 'http://fastandcomfy.io',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'http://fastandcomfy.io/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'http://www.fastandcomfy.io',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'http://www.fastandcomfy.io/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'https://fastandcomfy.io',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': '200'
-  }, {
-    'url': 'https://www.fastandcomfy.io',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'https://www.fastandcomfy.io/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 301
-  }, {
-    'url': 'https://fastandcomfy.io/postgresql/',
-    'expectUrl': 'https://fastandcomfy.io/postgresql/',
-    'expectStatus': '200'
-  }, {
-    'url': 'https://fastandcomfy.io/postgresql',
-    'expectUrl': 'https://fastandcomfy.io/postgresql/',
-    'expectStatus': 301
-  }, {
-    'url': 'http://fastandcomfy.io/contact',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'http://fastandcomfy.io/contact/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'http://www.fastandcomfy.io/contact',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'http://www.fastandcomfy.io/contact/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/contact',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/contact/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://www.fastandcomfy.io/contact',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://www.fastandcomfy.io/contact/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/submit-your-idea',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/submit-your-idea/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/help',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/help/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/pricing',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/pricing/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/blog',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }, {
-    'url': 'https://fastandcomfy.io/blog/',
-    'expectUrl': 'https://fastandcomfy.io/',
-    'expectStatus': 404
-  }]
+  const appTileUrls = [];
+  const internalUrls = [];
+  const externalUrls = [];
+  const responseCheck = [
+    {
+      url: 'https://fastandcomfy.io/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 200,
+      title: 'Revolution of Hosting',
+      description:
+        'We’re hosting apps and services that are ready for you to use in an instant. No need for installation, configuration or worrying. Just what you need in a matter of seconds. It’s fast and comfy.',
+      h1: 'Revolution of Hosting',
+      robots: 'index,follow',
+      canonical: 'https://fastandcomfy.io/',
+      og: true,
+      ogType: 'website',
+      ogTitle: 'Fast and Comfy Technologies',
+      ogDescription:
+        'Any server uptime in 3 seconds. No installation, configuration, or maintenance.',
+      ogImage:
+        'https://res.cloudinary.com/fastandcomfy/image/upload/v1606512896/open-graph/fac-og.png',
+      ogImageAlt: 'Revolution of Hosting',
+    },
+    {
+      url: 'http://fastandcomfy.io',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'http://fastandcomfy.io/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'http://www.fastandcomfy.io',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'http://www.fastandcomfy.io/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'https://fastandcomfy.io',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: '200',
+    },
+    {
+      url: 'https://www.fastandcomfy.io',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'https://www.fastandcomfy.io/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 301,
+    },
+    {
+      url: 'https://fastandcomfy.io/postgresql/',
+      expectUrl: 'https://fastandcomfy.io/postgresql/',
+      expectStatus: '200',
+    },
+    {
+      url: 'https://fastandcomfy.io/postgresql',
+      expectUrl: 'https://fastandcomfy.io/postgresql/',
+      expectStatus: 301,
+    },
+    {
+      url: 'http://fastandcomfy.io/contact',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'http://fastandcomfy.io/contact/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'http://www.fastandcomfy.io/contact',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'http://www.fastandcomfy.io/contact/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/contact',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/contact/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://www.fastandcomfy.io/contact',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://www.fastandcomfy.io/contact/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/submit-your-idea',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/submit-your-idea/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/help',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/help/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/pricing',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/pricing/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/blog',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+    {
+      url: 'https://fastandcomfy.io/blog/',
+      expectUrl: 'https://fastandcomfy.io/',
+      expectStatus: 404,
+    },
+  ];
 
   // it('Visits page', () => {
   //   cy.intercept(rootWeb).as('home')
@@ -238,56 +267,43 @@ describe('Test FAC web', () => {
   //   })
   // })
 
-  describe("Check HTTP status & page content", () => {
-    responseCheck.forEach(pageObj => {
+  describe('Check HTTP status & page content', () => {
+    responseCheck.forEach((pageObj) => {
       it(`Page on "${pageObj.url}"`, () => {
         cy.visit(pageObj.url, {
-          failOnStatusCode: false
+          failOnStatusCode: false,
         });
 
-        cy.url()
-          .should("be.equals", pageObj.expectUrl)
+        cy.url().should('be.equals', pageObj.expectUrl);
 
         // Metadata existence
 
+        cy.get('head').find('title').should('have.length', 1);
+        cy.get('head').find('meta[name=description]').should('have.length', 1);
+        cy.get('head').find('meta[name=robots]').should('have.length', 1);
+        cy.get('head').find('link[rel=canonical]').should('have.length', 1);
 
-        cy.get('head')
-          .find('title')
-          .should('have.length', 1)
-        cy.get('head')
-          .find('meta[name=description]')
-          .should('have.length', 1)
-        cy.get('head')
-          .find('meta[name=robots]')
-          .should('have.length', 1)
-        cy.get('head')
-          .find('link[rel=canonical]')
-          .should('have.length', 1)
-
-        cy.get('body')
-          .find('h1')
-          .should('have.length', 1)
+        cy.get('body').find('h1').should('have.length', 1);
 
         // Metadata content
 
         if (pageObj.title) {
-          cy.title()
-            .should("include", pageObj.title)
+          cy.title().should('include', pageObj.title);
         }
         if (pageObj.description) {
           cy.get('head meta[name=description]')
             .should('have.attr', 'content')
-            .should('include', pageObj.description)
+            .should('include', pageObj.description);
         }
         if (pageObj.robots) {
           cy.get('head meta[name=robots]')
             .should('have.attr', 'content')
-            .should('include', pageObj.robots)
+            .should('include', pageObj.robots);
         }
         if (pageObj.canonical) {
           cy.get('head link[rel=canonical]')
             .should('have.attr', 'href')
-            .should('include', pageObj.canonical)
+            .should('include', pageObj.canonical);
         }
 
         // Open Graph
@@ -295,37 +311,36 @@ describe('Test FAC web', () => {
         if (pageObj.og) {
           cy.get('head meta[property="og:url"]')
             .should('have.attr', 'content')
-            .should('be.equal', pageObj.expectUrl)
+            .should('be.equal', pageObj.expectUrl);
           cy.get('head meta[property="fb:app_id"]')
             .should('have.attr', 'content')
-            .should('be.equal', fbAppId)
+            .should('be.equal', fbAppId);
           cy.get('head meta[property="og:site_name"]')
             .should('have.attr', 'content')
-            .should('be.equal', ogSiteName)
+            .should('be.equal', ogSiteName);
           cy.get('head meta[property="og:type"]')
             .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogType)
+            .should('be.equal', pageObj.ogType);
           cy.get('head meta[property="og:title"]')
             .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogTitle)
+            .should('be.equal', pageObj.ogTitle);
           cy.get('head meta[property="og:description"]')
             .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogDescription)
+            .should('be.equal', pageObj.ogDescription);
 
           if (pageObj.ogImage) {
             cy.get('head meta[property="og:image"]')
               .should('have.attr', 'content')
-              .should('be.equal', pageObj.ogImage)
+              .should('be.equal', pageObj.ogImage);
             cy.request({
               url: pageObj.ogImage,
-            })
-              .then((response) => {
-                expect(response.status).to.eq(200)
-                expect(!response.redirects)
-              })
+            }).then((response) => {
+              expect(response.status).to.eq(200);
+              expect(!response.redirects);
+            });
             cy.get('head meta[property="og:image:alt"]')
               .should('have.attr', 'content')
-              .should('be.equal', pageObj.ogImageAlt)
+              .should('be.equal', pageObj.ogImageAlt);
           }
         }
 
@@ -334,12 +349,11 @@ describe('Test FAC web', () => {
         if (pageObj.h1) {
           cy.get('h1')
             .should('have.attr', 'href')
-            .should('include', pageObj.canonical)
+            .should('include', pageObj.canonical);
         }
       });
     });
   });
-
 
   // it('apps', () => {
   // 	cy
@@ -378,7 +392,6 @@ describe('Test FAC web', () => {
   //     .get('[data-cy="AppTile"][href="/mongodb/"] .btn')
   //     .should('contain', 'Run')
   // })
-
 
   // it('Run PostgreSQL', () => {
   //   cy
@@ -487,7 +500,6 @@ describe('Test FAC web', () => {
   //     .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=strapi%20—%20fastandcomfy.io&amp;body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/strapi")
   // })
 
-
   // it('Visits FAC FAQ', () => {
   //   cy.visit(rootWeb + "/help")
   // })
@@ -541,5 +553,4 @@ describe('Test FAC web', () => {
   //     .should('have.class', 'link-white')
   //     .should('have.attr', 'href', rootApi)
   // })
-
-})
+});

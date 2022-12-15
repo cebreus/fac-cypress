@@ -1,9 +1,8 @@
 describe('Test FAC web', () => {
-
-  let rootDev = 'https://developersdev.fastandcomfy.io';
-  let rootApi = 'https://api-dev.fastandcomfy.io';
-  let rootWeb = 'https://dev.fastandcomfy.io';
-  let rootWizard = 'https://wizarddev.fastandcomfy.io';
+  const rootDev = 'https://developersdev.fastandcomfy.io';
+  const rootApi = 'https://api-dev.fastandcomfy.io';
+  const rootWeb = 'https://dev.fastandcomfy.io';
+  const rootWizard = 'https://wizarddev.fastandcomfy.io';
 
   // it('Check redirects', () => {
   // 	cy.request({
@@ -23,14 +22,16 @@ describe('Test FAC web', () => {
   // })
 
   it('Visits FAC home', () => {
-    cy.visit(rootWeb)
-  })
+    cy.visit(rootWeb);
+  });
 
   it('Check all links on FAC home', () => {
-    cy.visit(rootWeb)
-    cy.get('a:not([href^="mailto:"]):not([href*="www.linkedin.com"])').each(page => {
-      cy.request(page.prop('href'))
-    })
+    cy.visit(rootWeb);
+    cy.get('a:not([href^="mailto:"]):not([href*="www.linkedin.com"])').each(
+      (page) => {
+        cy.request(page.prop('href'));
+      }
+    );
   });
 
   // it('apps', () => {
@@ -40,187 +41,205 @@ describe('Test FAC web', () => {
   // })
 
   it('AppTile PostgreSQL', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/postgresql"] .btn')
-      .should('contain', 'Run')
-  })
+    cy.get('[data-cy="AppTile"][href="/postgresql"] .btn').should(
+      'contain',
+      'Run'
+    );
+  });
 
   it('AppTile MySQL', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/mysql"] .btn')
-      .should('contain', 'Run')
-  })
+    cy.get('[data-cy="AppTile"][href="/mysql"] .btn').should('contain', 'Run');
+  });
 
   it('AppTile Redis', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/redis"] .btn')
-      .should('contain', 'Run')
-  })
+    cy.get('[data-cy="AppTile"][href="/redis"] .btn').should('contain', 'Run');
+  });
 
   it('AppTile MongoDB', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/mongodb"] .btn')
-      .should('contain', 'Run')
-  })
+    cy.get('[data-cy="AppTile"][href="/mongodb"] .btn').should(
+      'contain',
+      'Run'
+    );
+  });
 
   it('Run PostgreSQL', () => {
-    cy
-      .get('[data-cy="AppTile"][href="/postgresql"] .btn')
+    cy.get('[data-cy="AppTile"][href="/postgresql"] .btn')
       .click()
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('contain', 'Run')
-        cy.wrap($btn).click()
+      .get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn).should('contain', 'Run');
+        cy.wrap($btn).click();
       })
       .wait(5000)
       .get('.c-app-starter--done')
       .should('be.visible')
-      .should('contain', 'App ID')
-  })
+      .should('contain', 'App ID');
+  });
 
   it('Go to Contact from top menu', () => {
-    cy
-      .get('.c-menu__label')
+    cy.get('.c-menu__label')
       .click()
-      .get('.u-link[href="/contact"]').then(($btn) => {
-        cy.wrap($btn).should('contain', 'Contact')
-        cy.wrap($btn).click()
+      .get('.u-link[href="/contact"]')
+      .then(($btn) => {
+        cy.wrap($btn).should('contain', 'Contact');
+        cy.wrap($btn).click();
       })
       .wait(1000)
       .get('h1.c-header__title')
-      .should('have.text', 'Contact')
-  })
+      .should('have.text', 'Contact');
+  });
 
   it('Visits FAC Contact', () => {
-    cy.visit(rootWeb + "/contact")
-  })
+    cy.visit(`${rootWeb}/contact`);
+  });
 
   it('Send contact form', () => {
-    cy
-      .get('[data-cy="FormContact"]')
+    cy.get('[data-cy="FormContact"]')
       .should('be.visible')
-      .get('#email').then(($input) => {
-        cy.wrap($input).should('have.attr', 'required')
+      .get('#email')
+      .then(($input) => {
+        cy.wrap($input).should('have.attr', 'required');
       })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('be.visible').should('contain', 'Submit').should('have.attr', 'disabled')
-      })
-      .wait(3000)
-      .get('#email').then(($input) => {
-        cy.wrap($input).focus().type('me@cebre.us')
-      })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).not('disabled')
-        cy.wrap($btn).click()
+      .get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn)
+          .should('be.visible')
+          .should('contain', 'Submit')
+          .should('have.attr', 'disabled');
       })
       .wait(3000)
-      .get('[data-cy="Alert"].alert-success').should('be.visible').should('contain', 'Thank you for your message!')
-  })
+      .get('#email')
+      .then(($input) => {
+        cy.wrap($input).focus().type('me@cebre.us');
+      })
+      .get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn).not('disabled');
+        cy.wrap($btn).click();
+      })
+      .wait(3000)
+      .get('[data-cy="Alert"].alert-success')
+      .should('be.visible')
+      .should('contain', 'Thank you for your message!');
+  });
 
   it('Visits FAC Submit idea', () => {
-    cy.visit(rootWeb + "/submit-your-idea")
-  })
+    cy.visit(`${rootWeb}/submit-your-idea`);
+  });
 
   it('Button Submit your idea', () => {
-    cy
-      .get('[data-cy="submit-your-idea"]')
+    cy.get('[data-cy="submit-your-idea"]')
       .should('be.visible')
       .should('have.class', 'btn-secondary')
       .should('have.text', 'Submit your idea')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/submit-your-idea")
-  })
+      .should(
+        'have.attr',
+        'href',
+        `mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A—%0D%0AFrom%20${rootWeb}/submit-your-idea`
+      );
+  });
 
   it('Visits FAC Strapi', () => {
-    cy.visit(rootWeb + "/strapi")
-  })
+    cy.visit(`${rootWeb}/strapi`);
+  });
 
   it('Send Strapi interest', () => {
-    cy
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('contain', 'I want this')
-        cy.wrap($btn).click()
+    cy.get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn).should('contain', 'I want this');
+        cy.wrap($btn).click();
       })
       .wait(3000)
       .get('[data-cy="FormContact"]')
       .should('be.visible')
-      .get('#email').then(($input) => {
-        cy.wrap($input).should('have.attr', 'required')
+      .get('#email')
+      .then(($input) => {
+        cy.wrap($input).should('have.attr', 'required');
       })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).should('be.visible').should('contain', 'Submit').should('have.attr', 'disabled')
-      })
-      .wait(3000)
-      .get('#email').then(($input) => {
-        cy.wrap($input).focus().type('me@cebre.us')
-      })
-      .get('.btn-success').then(($btn) => {
-        cy.wrap($btn).not('disabled')
-        cy.wrap($btn).click()
+      .get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn)
+          .should('be.visible')
+          .should('contain', 'Submit')
+          .should('have.attr', 'disabled');
       })
       .wait(3000)
-      .get('[data-cy="Alert"].alert-success').should('be.visible').should('contain', 'Thank you for your interest!')
-  })
+      .get('#email')
+      .then(($input) => {
+        cy.wrap($input).focus().type('me@cebre.us');
+      })
+      .get('.btn-success')
+      .then(($btn) => {
+        cy.wrap($btn).not('disabled');
+        cy.wrap($btn).click();
+      })
+      .wait(3000)
+      .get('[data-cy="Alert"].alert-success')
+      .should('be.visible')
+      .should('contain', 'Thank you for your interest!');
+  });
 
   it('Button Eager Write tu us', () => {
-    cy
-      .get('[data-cy="eager-app"]')
+    cy.get('[data-cy="eager-app"]')
       .should('be.visible')
       .should('have.text', 'Write to us.')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=strapi%20—%20fastandcomfy.io&amp;body=%0D%0A%0D%0A—%0D%0AFrom%20" + rootWeb + "/strapi")
-  })
-
+      .should(
+        'have.attr',
+        'href',
+        `mailto:info@fastandcomfy.io?subject=strapi%20—%20fastandcomfy.io&amp;body=%0D%0A%0D%0A—%0D%0AFrom%20${rootWeb}/strapi`
+      );
+  });
 
   it('Visits FAC FAQ', () => {
-    cy.visit(rootWeb + "/help")
-  })
+    cy.visit(`${rootWeb}/help`);
+  });
 
   it('Button Resources', () => {
-    cy
-      .get('[data-cy="HeaderPerex"] [href*="developers"]')
+    cy.get('[data-cy="HeaderPerex"] [href*="developers"]')
       .should('be.visible')
       .should('have.text', 'Resources for developers')
       .should('have.attr', 'href', rootDev)
-      .should('have.class', 'btn-secondary')
-  })
+      .should('have.class', 'btn-secondary');
+  });
 
   it('Button Pricing', () => {
-    cy
-      .get('[data-cy="HeaderPerex"] [href*="pricing"]')
+    cy.get('[data-cy="HeaderPerex"] [href*="pricing"]')
       .should('be.visible')
       .should('have.text', 'Pricing')
       .should('have.class', 'btn-link')
       .should('have.class', 'btn-white')
-      .should('have.attr', 'href', '/pricing')
-  })
+      .should('have.attr', 'href', '/pricing');
+  });
 
   it('Visits FAC Procong', () => {
-    cy.visit(rootWeb + "/pricing")
-  })
+    cy.visit(`${rootWeb}/pricing`);
+  });
 
   it('Link: suggestions and comments', () => {
-    cy
-      .get('a')
+    cy.get('a')
       .contains('suggestions and comments')
       .should('be.visible')
       .should('have.class', 'link-white')
-      .should('have.attr', 'href', "mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A%E2%80%94%0D%0AFrom%20" + rootWeb + "/pricing")
-  })
+      .should(
+        'have.attr',
+        'href',
+        `mailto:info@fastandcomfy.io?subject=New%20idea%20for%20project%20or%20app&body=%0D%0A%0D%0A%E2%80%94%0D%0AFrom%20${rootWeb}/pricing`
+      );
+  });
 
   it('Link: Contact us', () => {
-    cy
-      .get('a')
+    cy.get('a')
       .contains('Contact us')
       .should('be.visible')
       .should('have.class', 'link-white')
-      .should('have.attr', 'href', '/contact')
-  })
+      .should('have.attr', 'href', '/contact');
+  });
 
   it('Link: public API', () => {
-    cy
-      .get('a')
+    cy.get('a')
       .contains('public API')
       .should('be.visible')
       .should('have.class', 'link-white')
-      .should('have.attr', 'href', rootApi)
-  })
-
-})
+      .should('have.attr', 'href', rootApi);
+  });
+});
