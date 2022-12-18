@@ -1,25 +1,28 @@
 describe('Test FAC web', () => {
+  const domain = 'v2.fastandcomfy.io';
   const fbAppId = '677275829755694';
   const ogSiteName = 'Fast and Comfy Technologies';
+
   const rootDev = 'https://developersdev.fastandcomfy.io';
   const rootApi = 'https://api-dev.fastandcomfy.io';
-  const rootWeb = 'https://fastandcomfy.io';
+  const rootWeb = `https://${domain}/`;
   const rootWizard = 'https://wizarddev.fastandcomfy.io';
 
   const appTileUrls = [];
   const internalUrls = [];
   const externalUrls = [];
+
   const responseCheck = [
     {
-      url: 'https://fastandcomfy.io/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/`,
+      expectUrl: rootWeb,
       expectStatus: 200,
       title: 'Revolution of Hosting',
       description:
         'We’re hosting apps and services that are ready for you to use in an instant. No need for installation, configuration or worrying. Just what you need in a matter of seconds. It’s fast and comfy.',
       h1: 'Revolution of Hosting',
       robots: 'index,follow',
-      canonical: 'https://fastandcomfy.io/',
+      canonical: rootWeb,
       og: true,
       ogType: 'website',
       ogTitle: 'Fast and Comfy Technologies',
@@ -30,128 +33,93 @@ describe('Test FAC web', () => {
       ogImageAlt: 'Revolution of Hosting',
     },
     {
-      url: 'http://fastandcomfy.io',
-      expectUrl: 'https://fastandcomfy.io/',
-      expectStatus: 301,
-    },
-    {
-      url: 'http://fastandcomfy.io/',
-      expectUrl: 'https://fastandcomfy.io/',
-      expectStatus: 301,
-    },
-    {
-      url: 'http://www.fastandcomfy.io',
-      expectUrl: 'https://fastandcomfy.io/',
-      expectStatus: 301,
-    },
-    {
-      url: 'http://www.fastandcomfy.io/',
-      expectUrl: 'https://fastandcomfy.io/',
-      expectStatus: 301,
-    },
-    {
-      url: 'https://fastandcomfy.io',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/postgresql/`,
+      expectUrl: `https://${domain}/postgresql/`,
       expectStatus: '200',
     },
     {
-      url: 'https://www.fastandcomfy.io',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/postgresql`,
+      expectUrl: `https://${domain}/postgresql/`,
       expectStatus: 301,
     },
     {
-      url: 'https://www.fastandcomfy.io/',
-      expectUrl: 'https://fastandcomfy.io/',
-      expectStatus: 301,
-    },
-    {
-      url: 'https://fastandcomfy.io/postgresql/',
-      expectUrl: 'https://fastandcomfy.io/postgresql/',
-      expectStatus: '200',
-    },
-    {
-      url: 'https://fastandcomfy.io/postgresql',
-      expectUrl: 'https://fastandcomfy.io/postgresql/',
-      expectStatus: 301,
-    },
-    {
-      url: 'http://fastandcomfy.io/contact',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `http://${domain}/contact`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'http://fastandcomfy.io/contact/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `http://${domain}/contact/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'http://www.fastandcomfy.io/contact',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `http://www.${domain}/contact`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'http://www.fastandcomfy.io/contact/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `http://www.${domain}/contact/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/contact',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/contact`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/contact/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/contact/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://www.fastandcomfy.io/contact',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://www.${domain}/contact`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://www.fastandcomfy.io/contact/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://www.${domain}/contact/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/submit-your-idea',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/submit-your-idea`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/submit-your-idea/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/submit-your-idea/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/help',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/help`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/help/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/help/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/pricing',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/pricing`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/pricing/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/pricing/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/blog',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/blog`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
     {
-      url: 'https://fastandcomfy.io/blog/',
-      expectUrl: 'https://fastandcomfy.io/',
+      url: `https://${domain}/blog/`,
+      expectUrl: rootWeb,
       expectStatus: 404,
     },
   ];
@@ -267,89 +235,187 @@ describe('Test FAC web', () => {
   //   })
   // })
 
-  describe('Check HTTP status & page content', () => {
+  Cypress.Commands.add('redirectTest', (url, expectUrl, expectStatus) => {
+    cy.request({
+      url,
+      followRedirect: true,
+      failOnStatusCode: false,
+    }).then((response) => {
+      cy.log(response);
+      if (expectStatus === 200) {
+        if (response.status !== expectStatus) {
+          expect(response.status).to.eq(expectStatus);
+        }
+      } else {
+        const redirectStatus = Number(response.redirects[0].split(':')[0]);
+        const redirectUrl = response.redirects[0]
+          .match(/^[^:]*:(.*)$/)[1]
+          .trim();
+
+        cy.log(`got: ${redirectStatus}  expected: ${expectStatus}`);
+        cy.log(`got: ${redirectUrl}  expected: ${expectUrl}`);
+
+        if (redirectStatus !== expectStatus) {
+          expect(redirectStatus).to.eq(expectStatus);
+        }
+        if (redirectUrl !== expectUrl) {
+          expect(redirectUrl).to.eq(expectUrl);
+        }
+      }
+    });
+  });
+
+  describe('Root redirects', () => {
+    const domainNoWww = domain.replace('www.', '');
+
+    if (domainNoWww.split('.').length === 2) {
+      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}/`, rootWeb, 200);
+      });
+      it(`https://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 301);
+      });
+      it(`http://${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`http://${domainNoWww}/`, rootWeb, 301);
+      });
+      it(`http://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
+      });
+
+      it(`https://www.${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`https://www.${domainNoWww}/`, rootWeb, 301);
+      });
+      it(`https://www.${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`https://www.${domainNoWww}`, rootWeb, 301);
+      });
+      it(`http://www.${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`http://www.${domainNoWww}/`, rootWeb, 301);
+      });
+      it(`http://www.${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`http://www.${domainNoWww}`, rootWeb, 301);
+      });
+    } else {
+      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}/`, rootWeb, 200);
+      });
+      it(`https://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 301);
+      });
+      it(`http://${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`http://${domainNoWww}/`, rootWeb, 301);
+      });
+      it(`http://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
+      });
+    }
+  });
+
+  // describe('Root redirects & HTTP status', () => {
+  //   rootRedirects.forEach((pageObj) => {
+  //     // Skip subdomains like v2.domain.io
+  //     if (pageObj.url.split('.').length && !pageObj.url.includes('www.')) {
+  //       it(`Page on "${pageObj.url}"`, () => {
+  //         cy.redirectTest(pageObj.url, rootWeb, pageObj.expectStatus);
+  //       });
+  //     }
+  //   });
+  // });
+
+  describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {
       it(`Page on "${pageObj.url}"`, () => {
-        cy.visit(pageObj.url, {
-          failOnStatusCode: false,
-        });
+        cy.redirectTest(
+          `${pageObj.url}`,
+          pageObj.expectUrl,
+          pageObj.expectStatus
+        );
 
-        cy.url().should('be.equals', pageObj.expectUrl);
+        if (pageObj.expectStatus === 200) {
+          cy.visit(pageObj.url, {
+            failOnStatusCode: false,
+          });
 
-        // Metadata existence
+          // cy.url().should('be.equals', pageObj.expectUrl);
+          // Metadata existence
 
-        cy.get('head').find('title').should('have.length', 1);
-        cy.get('head').find('meta[name=description]').should('have.length', 1);
-        cy.get('head').find('meta[name=robots]').should('have.length', 1);
-        cy.get('head').find('link[rel=canonical]').should('have.length', 1);
+          cy.get('head').find('title').should('have.length', 1);
+          cy.get('head')
+            .find('meta[name=description]')
+            .should('have.length', 1);
+          cy.get('head').find('meta[name=robots]').should('have.length', 1);
+          cy.get('head').find('link[rel=canonical]').should('have.length', 1);
 
-        cy.get('body').find('h1').should('have.length', 1);
+          cy.get('body')
+            .find('h1')
+            .should('have.length', 1)
+            .should('be.visible');
 
-        // Metadata content
+          // Metadata content
 
-        if (pageObj.title) {
-          cy.title().should('include', pageObj.title);
-        }
-        if (pageObj.description) {
-          cy.get('head meta[name=description]')
-            .should('have.attr', 'content')
-            .should('include', pageObj.description);
-        }
-        if (pageObj.robots) {
-          cy.get('head meta[name=robots]')
-            .should('have.attr', 'content')
-            .should('include', pageObj.robots);
-        }
-        if (pageObj.canonical) {
-          cy.get('head link[rel=canonical]')
-            .should('have.attr', 'href')
-            .should('include', pageObj.canonical);
-        }
-
-        // Open Graph
-
-        if (pageObj.og) {
-          cy.get('head meta[property="og:url"]')
-            .should('have.attr', 'content')
-            .should('be.equal', pageObj.expectUrl);
-          cy.get('head meta[property="fb:app_id"]')
-            .should('have.attr', 'content')
-            .should('be.equal', fbAppId);
-          cy.get('head meta[property="og:site_name"]')
-            .should('have.attr', 'content')
-            .should('be.equal', ogSiteName);
-          cy.get('head meta[property="og:type"]')
-            .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogType);
-          cy.get('head meta[property="og:title"]')
-            .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogTitle);
-          cy.get('head meta[property="og:description"]')
-            .should('have.attr', 'content')
-            .should('be.equal', pageObj.ogDescription);
-
-          if (pageObj.ogImage) {
-            cy.get('head meta[property="og:image"]')
-              .should('have.attr', 'content')
-              .should('be.equal', pageObj.ogImage);
-            cy.request({
-              url: pageObj.ogImage,
-            }).then((response) => {
-              expect(response.status).to.eq(200);
-              expect(!response.redirects);
-            });
-            cy.get('head meta[property="og:image:alt"]')
-              .should('have.attr', 'content')
-              .should('be.equal', pageObj.ogImageAlt);
+          if (pageObj.title) {
+            cy.title().should('include', pageObj.title);
           }
-        }
+          if (pageObj.description) {
+            cy.get('head meta[name=description]')
+              .should('have.attr', 'content')
+              .should('include', pageObj.description);
+          }
+          if (pageObj.robots) {
+            cy.get('head meta[name=robots]')
+              .should('have.attr', 'content')
+              .should('include', pageObj.robots);
+          }
+          if (pageObj.canonical) {
+            cy.get('head link[rel=canonical]')
+              .should('have.attr', 'href')
+              .should('include', pageObj.canonical);
+          }
 
-        // Content
+          // Open Graph
 
-        if (pageObj.h1) {
-          cy.get('h1')
-            .should('have.attr', 'href')
-            .should('include', pageObj.canonical);
+          if (pageObj.og) {
+            cy.get('head meta[property="og:url"]')
+              .should('have.attr', 'content')
+              .should('be.equal', pageObj.expectUrl);
+            cy.get('head meta[property="fb:app_id"]')
+              .should('have.attr', 'content')
+              .should('be.equal', fbAppId);
+            cy.get('head meta[property="og:site_name"]')
+              .should('have.attr', 'content')
+              .should('be.equal', ogSiteName);
+            cy.get('head meta[property="og:type"]')
+              .should('have.attr', 'content')
+              .should('be.equal', pageObj.ogType);
+            cy.get('head meta[property="og:title"]')
+              .should('have.attr', 'content')
+              .should('be.equal', pageObj.ogTitle);
+            cy.get('head meta[property="og:description"]')
+              .should('have.attr', 'content')
+              .should('be.equal', pageObj.ogDescription);
+
+            if (pageObj.ogImage) {
+              cy.get('head meta[property="og:image"]')
+                .should('have.attr', 'content')
+                .should('be.equal', pageObj.ogImage);
+              cy.request({
+                url: pageObj.ogImage,
+              }).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(!response.redirects);
+              });
+              cy.get('head meta[property="og:image:alt"]')
+                .should('have.attr', 'content')
+                .should('be.equal', pageObj.ogImageAlt);
+            }
+          }
+
+          // Content
+
+          // if (pageObj.h1) {
+          //   cy.get('h1')
+          //     .should('have.attr', 'href')
+          //     .should('include', pageObj.canonical);
+          // }
         }
       });
     });
