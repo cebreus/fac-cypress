@@ -1,11 +1,11 @@
-describe('Test FAC web', () => {
-  const domain = 'v2.fastandcomfy.io';
+describe('Test nomodo.io web', () => {
+  const domain = 'nomodo.io';
   const fbAppId = '677275829755694';
-  const ogSiteName = 'Fast and Comfy Technologies';
+  const ogSiteName = 'nomodo.io';
 
   const rootDev = 'https://developersdev.fastandcomfy.io';
   const rootApi = 'https://api-dev.fastandcomfy.io';
-  const rootWeb = `https://${domain}/`;
+  const rootWeb = `https://${domain}`;
   const rootWizard = 'https://wizarddev.fastandcomfy.io';
 
   const appTileUrls = [];
@@ -17,20 +17,20 @@ describe('Test FAC web', () => {
       url: `https://${domain}/`,
       expectUrl: rootWeb,
       expectStatus: 200,
-      title: 'Revolution of Hosting',
+      title: 'Ready-made apps in one click',
       description:
-        'We’re hosting apps and services that are ready for you to use in an instant. No need for installation, configuration or worrying. Just what you need in a matter of seconds. It’s fast and comfy.',
-      h1: 'Revolution of Hosting',
+        'Access a ready-made app in an instant! Your new instance will be alive and running with one simple button click.',
+      h1: 'Ready-made apps in one click',
       robots: 'index,follow',
       canonical: rootWeb,
       og: true,
       ogType: 'website',
-      ogTitle: 'Fast and Comfy Technologies',
+      ogTitle: 'One-click away from your favourite app.',
       ogDescription:
-        'Any server uptime in 3 seconds. No installation, configuration, or maintenance.',
+        'Any server uptime in 3 seconds. No installation, no configuration, no maintenance.',
       ogImage:
-        'https://res.cloudinary.com/fastandcomfy/image/upload/v1606512896/open-graph/fac-og.png',
-      ogImageAlt: 'Revolution of Hosting',
+        'https://res.cloudinary.com/nomodo/image/upload/v1672096310/open-graph/nomodo-og.png',
+      ogImageAlt: 'Ready-made apps in one click',
     },
     {
       url: `https://${domain}/postgresql/`,
@@ -269,43 +269,91 @@ describe('Test FAC web', () => {
     const domainNoWww = domain.replace('www.', '');
 
     if (domainNoWww.split('.').length === 2) {
+      it(`https://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 200);
+      });
       it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
         cy.redirectTest(`https://${domainNoWww}/`, rootWeb, 200);
       });
-      it(`https://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 301);
+      it(`http://${domainNoWww}/ > ${rootWeb}/`, () => {
+        cy.redirectTest(`http://${domainNoWww}/`, `${rootWeb}/`, 301);
       });
-      it(`http://${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`http://${domainNoWww}/`, rootWeb, 301);
-      });
-      it(`http://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
+      it(`http://${domainNoWww} > ${rootWeb}/`, () => {
+        cy.redirectTest(`http://${domainNoWww}`, `${rootWeb}/`, 301);
       });
 
-      it(`https://www.${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`https://www.${domainNoWww}/`, rootWeb, 301);
-      });
       it(`https://www.${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`https://www.${domainNoWww}`, rootWeb, 301);
+        cy.redirectTest(`https://www.${domainNoWww}`, `${rootWeb}/`, 301);
       });
-      it(`http://www.${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`http://www.${domainNoWww}/`, rootWeb, 301);
+      it(`https://www.${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`https://www.${domainNoWww}/`, `${rootWeb}/`, 301);
       });
       it(`http://www.${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`http://www.${domainNoWww}`, rootWeb, 301);
+        cy.redirectTest(`http://www.${domainNoWww}`, `${rootWeb}/`, 301);
+      });
+      it(`http://www.${domainNoWww}/ > ${rootWeb}`, () => {
+        cy.redirectTest(`http://www.${domainNoWww}/`, `${rootWeb}/`, 301);
       });
     } else {
-      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}/`, rootWeb, 200);
-      });
       it(`https://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 200);
+      });
+      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
         cy.redirectTest(`https://${domainNoWww}`, rootWeb, 301);
+      });
+      it(`http://${domainNoWww} > ${rootWeb}`, () => {
+        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
       });
       it(`http://${domainNoWww}/ > ${rootWeb}`, () => {
         cy.redirectTest(`http://${domainNoWww}/`, rootWeb, 301);
       });
-      it(`http://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
+    }
+  });
+
+  describe('Old redirects', () => {
+    const domainFac = 'fastandcomfy.io';
+    const rootWebDac = `https://${domainFac}`;
+    const rootWebNomodo = `https://nomodo.io`;
+    const domainNoWwwFac = domainFac.replace('www.', '');
+
+    if (domainNoWwwFac.split('.').length === 2) {
+      it(`https://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 200);
+      });
+      it(`https://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://${domainNoWwwFac}/`, rootWebNomodo, 200);
+      });
+      it(`http://${domainNoWwwFac}/ > ${rootWebNomodo}/`, () => {
+        cy.redirectTest(`http://${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
+      });
+      it(`http://${domainNoWwwFac} > ${rootWebNomodo}/`, () => {
+        cy.redirectTest(`http://${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
+      });
+
+      it(`https://www.${domainNoWwwFac} > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://www.${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
+      });
+      it(`https://www.${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://www.${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
+      });
+      it(`http://www.${domainNoWwwFac} > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`http://www.${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
+      });
+      it(`http://www.${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`http://www.${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
+      });
+    } else {
+      it(`https://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 200);
+      });
+      it(`https://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 301);
+      });
+      it(`http://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`http://${domainNoWwwFac}`, rootWebNomodo, 301);
+      });
+      it(`http://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
+        cy.redirectTest(`http://${domainNoWwwFac}/`, rootWebNomodo, 301);
       });
     }
   });
