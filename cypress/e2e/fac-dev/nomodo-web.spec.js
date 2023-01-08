@@ -376,6 +376,19 @@ describe('Test nomodo.io web', () => {
     });
   });
 
+  describe('Modal Private beta interest behavior', () => {
+    it('opens modal when clicking on footer app tiles, app tiles, and hero CTA', () => {
+      cy.visit('https://nomodo.io');
+      cy.get(
+        '[data-cy^="footerAppCt"], [data-cy^="appTileCta"], [data-cy="heroCta"]'
+      ).each((element) => {
+        cy.wrap(element).click({ multiple: true });
+        cy.get('button[type=submit]').should('contain', 'Get early access');
+        cy.get('[aria-label="Close modal"]').click({ multiple: true });
+      });
+    });
+  });
+
   describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {
       it(`Page on "${pageObj.url}"`, () => {
