@@ -262,73 +262,80 @@ describe('Test nomodo.io web', () => {
   });
 
   describe('Test old domains redirects', () => {
-    const targetUrl = 'https://nomodo.io'
-    const testDomains = ['fastandcomfy.io', 'fastandcomfy.com']
-    const protocols = ['http', 'https']
+    const targetUrl = 'https://nomodo.io';
+    const testDomains = ['fastandcomfy.io', 'fastandcomfy.com'];
+    const protocols = ['http', 'https'];
 
     for (const domain of testDomains) {
       for (const protocol of protocols) {
         const testCases = [
-          { url: `${protocol}://${domain}`, },
+          { url: `${protocol}://${domain}` },
           { url: `${protocol}://${domain}/` },
           { url: `${protocol}://www.${domain}` },
           { url: `${protocol}://www.${domain}/` },
-        ]
+        ];
 
         testCases.forEach(({ url }) => {
           it(`checks if redirect from ${url} to ${targetUrl} is 301`, () => {
             cy.request({
-              url: url,
+              url,
               followRedirect: false,
               failOnStatusCode: false,
             }).then((response) => {
-              expect(response.status).to.eq(301)
-              expect(response.headers.location).to.eq(targetUrl)
-            })
-          })
+              expect(response.status).to.eq(301);
+              expect(response.headers.location).to.eq(targetUrl);
+            });
+          });
         });
       }
     }
   });
 
-
   describe('Test current domain redirects', () => {
-    const targetUrl = 'https://nomodo.io'
-    const testDomains = ['nomodo.io']
-    const protocols = ['http', 'https']
+    const targetUrl = 'https://nomodo.io';
+    const testDomains = ['nomodo.io'];
+    const protocols = ['http', 'https'];
 
     testDomains.forEach((domain) => {
       protocols.forEach((protocol) => {
         const testCases = [
-          { url: `${protocol}://${domain}`, expectedStatus: protocol === 'https' && !domain.startsWith('www.') ? 200 : 301 },
+          {
+            url: `${protocol}://${domain}`,
+            expectedStatus:
+              protocol === 'https' && !domain.startsWith('www.') ? 200 : 301,
+          },
           { url: `${protocol}://www.${domain}`, expectedStatus: 301 },
-          { url: `${protocol}://${domain}/`, expectedStatus: protocol === 'https' && !domain.startsWith('www.') ? 200 : 301 },
+          {
+            url: `${protocol}://${domain}/`,
+            expectedStatus:
+              protocol === 'https' && !domain.startsWith('www.') ? 200 : 301,
+          },
           { url: `${protocol}://www.${domain}/`, expectedStatus: 301 },
-        ]
+        ];
 
         testCases.forEach(({ url, expectedStatus }) => {
           it(`checks if ${url} has expected status code`, () => {
             cy.request({
-              url: url,
+              url,
               followRedirect: false,
               failOnStatusCode: false,
             }).then((response) => {
               if (expectedStatus === 200) {
-                expect(response.status).to.eq(200)
+                expect(response.status).to.eq(200);
               } else {
-                expect(response.status).to.eq(301)
-                expect(response.headers.location).to.eq(targetUrl)
+                expect(response.status).to.eq(301);
+                expect(response.headers.location).to.eq(targetUrl);
               }
-            })
-          })
-        })
-      })
-    })
+            });
+          });
+        });
+      });
+    });
   });
 
   describe('External links on https://nomodo.io', () => {
-    let errors = [];
-    let testedUrls = new Set();
+    const errors = [];
+    const testedUrls = new Set();
 
     it('should find all functional external links', () => {
       cy.visit('https://nomodo.io');
@@ -345,7 +352,9 @@ describe('Test nomodo.io web', () => {
             failOnStatusCode: false,
           }).then((response) => {
             if (response.statusCode !== 200) {
-              errors.push(`${linkUrl} returned a ${response.statusCode} status code.`);
+              errors.push(
+                `${linkUrl} returned a ${response.statusCode} status code.`
+              );
             }
           });
         }
