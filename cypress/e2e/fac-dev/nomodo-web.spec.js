@@ -2,11 +2,7 @@ describe('Test nomodo.io web', () => {
   const domain = 'nomodo.io';
   const fbAppId = '677275829755694';
   const ogSiteName = 'nomodo.io';
-
-  const rootDev = 'https://developersdev.fastandcomfy.io';
-  const rootApi = 'https://api-dev.fastandcomfy.io';
   const rootWeb = `https://${domain}`;
-  const rootWizard = 'https://wizarddev.fastandcomfy.io';
 
   const appTileUrls = [];
   const internalUrls = [];
@@ -265,109 +261,123 @@ describe('Test nomodo.io web', () => {
     });
   });
 
-  describe('Root redirects', () => {
-    const domainNoWww = domain.replace('www.', '');
+  describe('Test old domains redirects', () => {
+    const targetUrl = 'https://nomodo.io'
+    const testDomains = ['fastandcomfy.io', 'fastandcomfy.com']
+    const protocols = ['http', 'https']
 
-    if (domainNoWww.split('.').length === 2) {
-      it(`https://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 200);
-      });
-      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}/`, rootWeb, 200);
-      });
-      it(`http://${domainNoWww}/ > ${rootWeb}/`, () => {
-        cy.redirectTest(`http://${domainNoWww}/`, `${rootWeb}/`, 301);
-      });
-      it(`http://${domainNoWww} > ${rootWeb}/`, () => {
-        cy.redirectTest(`http://${domainNoWww}`, `${rootWeb}/`, 301);
-      });
+    testDomains.forEach((domain) => {
+      protocols.forEach((protocol) => {
+        const testCases = [
+          { url: `${protocol}://${domain}`, },
+          { url: `${protocol}://${domain}/` },
+          { url: `${protocol}://www.${domain}` },
+          { url: `${protocol}://www.${domain}/` },
+        ]
 
-      it(`https://www.${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`https://www.${domainNoWww}`, `${rootWeb}/`, 301);
-      });
-      it(`https://www.${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`https://www.${domainNoWww}/`, `${rootWeb}/`, 301);
-      });
-      it(`http://www.${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`http://www.${domainNoWww}`, `${rootWeb}/`, 301);
-      });
-      it(`http://www.${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`http://www.${domainNoWww}/`, `${rootWeb}/`, 301);
-      });
-    } else {
-      it(`https://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 200);
-      });
-      it(`https://${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`https://${domainNoWww}`, rootWeb, 301);
-      });
-      it(`http://${domainNoWww} > ${rootWeb}`, () => {
-        cy.redirectTest(`http://${domainNoWww}`, rootWeb, 301);
-      });
-      it(`http://${domainNoWww}/ > ${rootWeb}`, () => {
-        cy.redirectTest(`http://${domainNoWww}/`, rootWeb, 301);
-      });
-    }
+        testCases.forEach(({ url }) => {
+          it(`checks if redirect from ${url} to ${targetUrl} is 301`, () => {
+            cy.request({
+              url: url,
+              followRedirect: false,
+              failOnStatusCode: false,
+
+            }).then((response) => {
+              expect(response.status).to.eq(301)
+              expect(response.headers.location).to.eq(targetUrl)
+            })
+          })
+        })
+      })
+
+    })
   });
 
-  describe('Old redirects', () => {
-    const domainFac = 'fastandcomfy.io';
-    const rootWebDac = `https://${domainFac}`;
-    const rootWebNomodo = `https://nomodo.io`;
-    const domainNoWwwFac = domainFac.replace('www.', '');
+  describe('Test current domain redirects', () => {
+    const targetUrl = 'https://nomodo.io'
+    const testDomains = ['nomodo.io']
+    const protocols = ['http', 'https']
 
-    if (domainNoWwwFac.split('.').length === 2) {
-      it(`https://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 200);
-      });
-      it(`https://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://${domainNoWwwFac}/`, rootWebNomodo, 200);
-      });
-      it(`http://${domainNoWwwFac}/ > ${rootWebNomodo}/`, () => {
-        cy.redirectTest(`http://${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
-      });
-      it(`http://${domainNoWwwFac} > ${rootWebNomodo}/`, () => {
-        cy.redirectTest(`http://${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
-      });
+    testDomains.forEach((domain) => {
+      protocols.forEach((protocol) => {
+        const testCases = [
+          { url: `${protocol}://${domain}`, expectedStatus: protocol === 'https' && !domain.startsWith('www.') ? 200 : 301 },
+          { url: `${protocol}://www.${domain}`, expectedStatus: 301 },
+          { url: `${protocol}://${domain}/`, expectedStatus: protocol === 'https' && !domain.startsWith('www.') ? 200 : 301 },
+          { url: `${protocol}://www.${domain}/`, expectedStatus: 301 },
+        ]
 
-      it(`https://www.${domainNoWwwFac} > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://www.${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
-      });
-      it(`https://www.${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://www.${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
-      });
-      it(`http://www.${domainNoWwwFac} > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`http://www.${domainNoWwwFac}`, `${rootWebNomodo}/`, 301);
-      });
-      it(`http://www.${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`http://www.${domainNoWwwFac}/`, `${rootWebNomodo}/`, 301);
-      });
-    } else {
-      it(`https://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 200);
-      });
-      it(`https://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`https://${domainNoWwwFac}`, rootWebNomodo, 301);
-      });
-      it(`http://${domainNoWwwFac} > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`http://${domainNoWwwFac}`, rootWebNomodo, 301);
-      });
-      it(`http://${domainNoWwwFac}/ > ${rootWebNomodo}`, () => {
-        cy.redirectTest(`http://${domainNoWwwFac}/`, rootWebNomodo, 301);
-      });
-    }
+        testCases.forEach(({ url, expectedStatus }) => {
+          it(`checks if ${url} has expected status code`, () => {
+            cy.request({
+              url: url,
+              followRedirect: false,
+              failOnStatusCode: false,
+            }).then((response) => {
+              if (expectedStatus === 200) {
+                expect(response.status).to.eq(200)
+              } else {
+                expect(response.status).to.eq(301)
+                expect(response.headers.location).to.eq(targetUrl)
+              }
+            })
+          })
+        })
+      })
+    })
   });
 
-  // describe('Root redirects & HTTP status', () => {
-  //   rootRedirects.forEach((pageObj) => {
-  //     // Skip subdomains like v2.domain.io
-  //     if (pageObj.url.split('.').length && !pageObj.url.includes('www.')) {
-  //       it(`Page on "${pageObj.url}"`, () => {
-  //         cy.redirectTest(pageObj.url, rootWeb, pageObj.expectStatus);
-  //       });
-  //     }
-  //   });
-  // });
+
+  describe('External links on https://nomodo.io', () => {
+    let errors = [];
+    let testedUrls = new Set();
+
+    it('should find all functional external links', () => {
+      cy.visit('https://nomodo.io');
+
+      cy.get('a[href^="http"]').each(($link) => {
+        const linkUrl = $link.prop('href');
+
+        if (!testedUrls.has(linkUrl)) {
+          testedUrls.add(linkUrl);
+
+          cy.request({
+            url: linkUrl,
+            followRedirect: true,
+            failOnStatusCode: false,
+          }).then((response) => {
+            if (response.statusCode !== 200) {
+              errors.push(`${linkUrl} returned a ${response.statusCode} status code.`);
+            }
+          });
+        }
+      });
+    });
+
+    after(() => {
+      if (errors.length > 0) {
+        try {
+          errors.forEach((error) => {
+            console.error(error);
+          });
+
+          throw new Error(`There were ${errors.length} errors.`);
+        } catch (error) {
+          expect(error).to.not.be.null;
+        }
+      }
+    });
+  });
+
+
+
+
+
+
+
+
+
+
 
   describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {
