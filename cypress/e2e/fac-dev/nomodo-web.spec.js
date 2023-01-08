@@ -266,8 +266,8 @@ describe('Test nomodo.io web', () => {
     const testDomains = ['fastandcomfy.io', 'fastandcomfy.com']
     const protocols = ['http', 'https']
 
-    testDomains.forEach((domain) => {
-      protocols.forEach((protocol) => {
+    for (const domain of testDomains) {
+      for (const protocol of protocols) {
         const testCases = [
           { url: `${protocol}://${domain}`, },
           { url: `${protocol}://${domain}/` },
@@ -281,17 +281,16 @@ describe('Test nomodo.io web', () => {
               url: url,
               followRedirect: false,
               failOnStatusCode: false,
-
             }).then((response) => {
               expect(response.status).to.eq(301)
               expect(response.headers.location).to.eq(targetUrl)
             })
           })
-        })
-      })
-
-    })
+        });
+      }
+    }
   });
+
 
   describe('Test current domain redirects', () => {
     const targetUrl = 'https://nomodo.io'
@@ -326,7 +325,6 @@ describe('Test nomodo.io web', () => {
       })
     })
   });
-
 
   describe('External links on https://nomodo.io', () => {
     let errors = [];
@@ -368,16 +366,6 @@ describe('Test nomodo.io web', () => {
       }
     });
   });
-
-
-
-
-
-
-
-
-
-
 
   describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {
