@@ -5,27 +5,29 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
+    "cy:links": "npx cypress run --spec cypress/e2e/fac-dev/nomodo-links.spec.js --headless",
+    "cy:content": "npx cypress run --spec cypress/e2e/fac-dev/nomodo-content.spec.js",
     "cy:record": "npx cypress run --record --key b49a0274-3dcf-4833-928b-eb7dd3911afb",
     "js:fix": "npx eslint ./cypress/e2e/**/*.js --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "^12.0.0"
+    "cypress": "^12.5.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
+    "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
-    "eslint": "^8.28.0",
+    "eslint": "^8.33.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-disable": "^2.0.3",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsdoc": "^39.6.2",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsdoc": "^39.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-require-sort": "^1.3.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.8.4"
   }
 }
