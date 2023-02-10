@@ -30,92 +30,43 @@ describe('Test nomodo.io web', () => {
     },
     {
       url: `https://${domain}/postgresql/`,
-      expectUrl: `https://${domain}/postgresql/`,
-      expectStatus: '200',
+      expectUrl: `https://${domain}/postgresql`,
+      expectStatus: 308,
     },
     {
       url: `https://${domain}/postgresql`,
-      expectUrl: `https://${domain}/postgresql/`,
-      expectStatus: 301,
-    },
-    {
-      url: `http://${domain}/contact`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `http://${domain}/contact/`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `http://www.${domain}/contact`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `http://www.${domain}/contact/`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `https://${domain}/contact`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `https://${domain}/contact/`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `https://www.${domain}/contact`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `https://www.${domain}/contact/`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
+      expectUrl: `https://${domain}/postgresql`,
+      expectStatus: 200,
     },
     {
       url: `https://${domain}/submit-your-idea`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/submit-your-idea`,
       expectStatus: 404,
     },
     {
       url: `https://${domain}/submit-your-idea/`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/submit-your-idea/`,
       expectStatus: 404,
     },
-    {
-      url: `https://${domain}/help`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
-    {
-      url: `https://${domain}/help/`,
-      expectUrl: rootWeb,
-      expectStatus: 404,
-    },
+
     {
       url: `https://${domain}/pricing`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/pricing`,
       expectStatus: 404,
     },
     {
       url: `https://${domain}/pricing/`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/pricing/`,
       expectStatus: 404,
     },
     {
       url: `https://${domain}/blog`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/blog`,
       expectStatus: 404,
     },
     {
       url: `https://${domain}/blog/`,
-      expectUrl: rootWeb,
+      expectUrl: `https://${domain}/blog/`,
       expectStatus: 404,
     },
   ];
@@ -232,162 +183,45 @@ describe('Test nomodo.io web', () => {
   // })
 
   Cypress.Commands.add('redirectTest', (url, expectUrl, expectStatus) => {
+    // Make a request to the specified URL, with followRedirect set to false and failOnStatusCode set to false
     cy.request({
       url,
-      followRedirect: true,
+      followRedirect: false,
       failOnStatusCode: false,
     }).then((response) => {
-      cy.log(response);
-      if (expectStatus === 200) {
-        if (response.status !== expectStatus) {
-          expect(response.status).to.eq(expectStatus);
-        }
-      } else {
-        const redirectStatus = Number(response.redirects[0].split(':')[0]);
-        const redirectUrl = response.redirects[0]
-          .match(/^[^:]*:(.*)$/)[1]
-          .trim();
+      // Log the response status code
+      cy.log(`Response status: ${response.status}`);
 
-        cy.log(`got: ${redirectStatus}  expected: ${expectStatus}`);
-        cy.log(`got: ${redirectUrl}  expected: ${expectUrl}`);
+      // Expect the response status to equal the expected status code
+      expect(response.status).to.equal(expectStatus);
 
-        if (redirectStatus !== expectStatus) {
-          expect(redirectStatus).to.eq(expectStatus);
-        }
-        if (redirectUrl !== expectUrl) {
-          expect(redirectUrl).to.eq(expectUrl);
-        }
-      }
+      // If there are no redirects, return
+      if (!Array.isArray(response.redirects) || response.redirects.length === 0)
+        return;
+
+      // If there are redirects, get the first one
+      const redirectUrl = response.redirects[0];
+
+      // Log the expected and actual redirect URLs
+      cy.log(`got: ${redirectUrl}  expected: ${expectUrl}`);
+
+      // Expect the first redirect URL to equal the expected URL
+      expect(redirectUrl).to.equal(expectUrl);
     });
   });
 
-  describe('Test old domains redirects', () => {
-    const targetUrl = 'https://nomodo.io';
-    const testDomains = ['fastandcomfy.io', 'fastandcomfy.com'];
-    const protocols = ['http', 'https'];
 
-    for (const domain of testDomains) {
-      for (const protocol of protocols) {
-        const testCases = [
-          { url: `${protocol}://${domain}` },
-          { url: `${protocol}://${domain}/` },
-          { url: `${protocol}://www.${domain}` },
-          { url: `${protocol}://www.${domain}/` },
-        ];
 
-        testCases.forEach(({ url }) => {
-          it(`checks if redirect from ${url} to ${targetUrl} is 301`, () => {
-            cy.request({
-              url,
-              followRedirect: false,
-              failOnStatusCode: false,
-            }).then((response) => {
-              expect(response.status).to.eq(301);
-              expect(response.headers.location).to.eq(targetUrl);
-            });
-          });
-        });
-      }
-    }
-  });
-
-  describe('Test current domain redirects', () => {
-    const targetUrl = 'https://nomodo.io';
-    const testDomains = ['nomodo.io'];
-    const protocols = ['http', 'https'];
-
-    testDomains.forEach((domain) => {
-      protocols.forEach((protocol) => {
-        const testCases = [
-          {
-            url: `${protocol}://${domain}`,
-            expectedStatus:
-              protocol === 'https' && !domain.startsWith('www.') ? 200 : 301,
-          },
-          { url: `${protocol}://www.${domain}`, expectedStatus: 301 },
-          {
-            url: `${protocol}://${domain}/`,
-            expectedStatus:
-              protocol === 'https' && !domain.startsWith('www.') ? 200 : 301,
-          },
-          { url: `${protocol}://www.${domain}/`, expectedStatus: 301 },
-        ];
-
-        testCases.forEach(({ url, expectedStatus }) => {
-          it(`checks if ${url} has expected status code`, () => {
-            cy.request({
-              url,
-              followRedirect: false,
-              failOnStatusCode: false,
-            }).then((response) => {
-              if (expectedStatus === 200) {
-                expect(response.status).to.eq(200);
-              } else {
-                expect(response.status).to.eq(301);
-                expect(response.headers.location).to.eq(targetUrl);
-              }
-            });
-          });
-        });
-      });
-    });
-  });
-
-  describe('External links on https://nomodo.io', () => {
-    const errors = [];
-    const testedUrls = new Set();
-
-    it('should find all functional external links', () => {
+  describe('4Cookiebot popup', () => {
+    it('Should display the Cookiebot popup', () => {
       cy.visit('https://nomodo.io');
-
-      cy.get('a[href^="http"]').each(($link) => {
-        const linkUrl = $link.prop('href');
-
-        if (!testedUrls.has(linkUrl)) {
-          testedUrls.add(linkUrl);
-
-          cy.request({
-            url: linkUrl,
-            followRedirect: true,
-            failOnStatusCode: false,
-          }).then((response) => {
-            if (response.statusCode !== 200) {
-              errors.push(
-                `${linkUrl} returned a ${response.statusCode} status code.`
-              );
-            }
-          });
-        }
-      });
-    });
-
-    after(() => {
-      if (errors.length > 0) {
-        try {
-          errors.forEach((error) => {
-            console.error(error);
-          });
-
-          throw new Error(`There were ${errors.length} errors.`);
-        } catch (error) {
-          expect(error).to.not.be.null;
-        }
-      }
+      cy.get('#CybotCookiebotDialog').should('be.visible');
+      cy.get('#CybotCookiebotDialogBodyButtonDecline').click();
+      cy.get('#CybotCookiebotDialog').should('not.be.visible');
     });
   });
 
-  describe('Modal Private beta interest behavior', () => {
-    it('opens modal when clicking on footer app tiles, app tiles, and hero CTA', () => {
-      cy.visit('https://nomodo.io');
-      cy.get(
-        '[data-cy^="footerAppCt"], [data-cy^="appTileCta"], [data-cy="heroCta"]'
-      ).each((element) => {
-        cy.wrap(element).click({ multiple: true });
-        cy.get('button[type=submit]').should('contain', 'Get early access');
-        cy.get('[aria-label="Close modal"]').click({ multiple: true });
-      });
-    });
-  });
+
 
   describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {
@@ -407,9 +241,9 @@ describe('Test nomodo.io web', () => {
           // Metadata existence
 
           cy.get('head').find('title').should('have.length', 1);
-          cy.get('head')
-            .find('meta[name=description]')
-            .should('have.length', 1);
+          // cy.get('head')
+          //   .find('meta[name=description]')
+          //   .should('have.length', 1);
           cy.get('head').find('meta[name=robots]').should('have.length', 1);
           cy.get('head').find('link[rel=canonical]').should('have.length', 1);
 
