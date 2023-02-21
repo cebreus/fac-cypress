@@ -1,4 +1,4 @@
-describe('Test nomodo.io web', () => {
+describe('Test nomodo.io web content', () => {
   const domain = 'nomodo.io';
   const fbAppId = '677275829755694';
   const ogSiteName = 'nomodo.io';
@@ -210,9 +210,7 @@ describe('Test nomodo.io web', () => {
     });
   });
 
-
-
-  describe('4Cookiebot popup', () => {
+  describe('Cookiebot popup', () => {
     it('Should display the Cookiebot popup', () => {
       cy.visit('https://nomodo.io');
       cy.get('#CybotCookiebotDialog').should('be.visible');
@@ -220,8 +218,6 @@ describe('Test nomodo.io web', () => {
       cy.get('#CybotCookiebotDialog').should('not.be.visible');
     });
   });
-
-
 
   describe('Page redirects and content', () => {
     responseCheck.forEach((pageObj) => {

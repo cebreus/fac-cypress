@@ -6,7 +6,7 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:links": "npx cypress run --spec cypress/e2e/fac-dev/nomodo-links.spec.js --headless",
-    "cy:content": "npx cypress run --spec cypress/e2e/fac-dev/nomodo-content.spec.js",
+    "cy:web": "npx cypress run --spec cypress/e2e/fac-dev/nomodo-web.spec.js",
     "cy:record": "npx cypress run --record --key b49a0274-3dcf-4833-928b-eb7dd3911afb",
     "js:fix": "npx eslint ./cypress/e2e/**/*.js --fix"
   },
