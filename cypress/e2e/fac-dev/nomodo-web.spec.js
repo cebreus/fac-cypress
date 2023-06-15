@@ -23,7 +23,7 @@ describe('Test nomodo.io web content', () => {
       ogType: 'website',
       ogTitle: 'One-click away from your favourite app.',
       ogDescription:
-        'Any server uptime in 3 seconds. No installation, no configuration, no maintenance.',
+        'Any server uptime in few seconds. No installation, no configuration, no maintenance.',
       ogImage:
         'https://res.cloudinary.com/nomodo/image/upload/v1672096310/open-graph/nomodo-og.png',
       ogImageAlt: 'Ready-made apps in one click',
